@@ -1,0 +1,40 @@
+
+
+import { apiLogout, apiRegister } from "../../apis/user";
+import { apiLogin } from "../../apis/user";
+import { loginError, loginStart, loginSuccess, logoutSuccess, registerError, registerStart, registerSuccess } from "../slice/authSlice";
+import Swal from 'sweetalert2'
+
+export const register = async (data, dispatch, navigate) => {
+    dispatch(registerStart())
+    try {
+        const res = await apiRegister(data)
+        dispatch(registerSuccess(res))
+        Swal.fire('Đăng Ký thành công!', 'Chuyển hướng đến trang đăng nhập...', 'success').then(() => {
+            navigate('/login')
+        })
+    } catch (error) {
+        dispatch(registerError())
+        Swal.fire('Đăng ký thất bại!', response.message, 'error')
+    }
+}
+
+export const login = async (data,dispatch,navigate) =>{
+    dispatch(loginStart())
+    try {
+        const res = await apiLogin(data)
+        dispatch(loginSuccess(res))
+        Swal.fire('Đăng nhập thành công!', 'Chuyển hướng đến trang chính...', 'success').then(() => {
+            navigate('/')
+        })
+    } catch (error) {
+        dispatch(loginError())
+        Swal.fire('Đăng nhập thất bại!', response.message, 'error')
+    }
+}
+
+export const logout = async (dispatch,navigate,refreshToken) =>{
+    const res = await apiLogout(refreshToken)
+    dispatch(logoutSuccess(res))
+    navigate('/login')
+}
