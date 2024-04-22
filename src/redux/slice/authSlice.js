@@ -3,7 +3,8 @@ const authSlice = createSlice({
     name: 'auth',
     initialState: {
         login: {
-            currentUser:null,//access,refresh
+            userData:null,
+            accessToken:null,//access,refresh
             isFetching:false,
             isError:false,
             isSuccess:false
@@ -39,7 +40,8 @@ const authSlice = createSlice({
             state.login.isFetching = false;
             state.login.isError = false;
             state.login.isSuccess = true;
-            state.login.currentUser = action.payload;
+            state.login.userData = action.payload.userData
+            state.login.accessToken = action.payload.accessToken
         },
         loginError:(state)=>{
             state.login.isFetching = false
@@ -47,7 +49,7 @@ const authSlice = createSlice({
             state.login.isError = true
         },
         logoutSuccess:(state) =>{
-            state.login.currentUser = null
+            state.login.token = null
         }
     }
 })

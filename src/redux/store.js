@@ -11,7 +11,7 @@ import {
   } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import authSlice from './slice/authSlice';
-import categorySlice from './slice/categorySlice';
+import userSlice from './slice/userSlice';
 
 
 
@@ -23,7 +23,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   auth:authSlice,
-  category:categorySlice
+  user: userSlice
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

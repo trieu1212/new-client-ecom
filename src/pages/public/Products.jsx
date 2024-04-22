@@ -23,8 +23,14 @@ const Products = () => {
     setProducts(response.product)
   }
   useEffect(() => {
+    if(categoryName===":categoryName"){
+      const getAllProducts = async() =>{
+        const response = await apis.getApiProducts({}, { limit:20 })
+      }
+    }else{
     getAllProductsByCategory()
     getAllCategories()
+    }
   }, [categoryId,sort])
   return (
     <>
@@ -32,7 +38,7 @@ const Products = () => {
         <div className='h-[81px] flex justify-center items-center bg-gray-100'>
           <div className='w-main '>
             <h3 className='font-semibold text-[20px]'>
-              {categoryName ? categoryName : 'Tất cả sản phẩm'}
+              {categoryName===":categoryName" ? 'Tất cả sản phẩm' : categoryName}
             </h3>
           </div>
         </div>

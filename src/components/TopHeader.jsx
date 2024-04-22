@@ -1,16 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import icons from '../ultils/icons'
 import { logout } from '../redux/apiRequest/authApiRequest'
+import { getUser } from '../redux/apiRequest/userApiRequest'
 const TopHeader = () => {
     const {RiLogoutBoxRLine} = icons
-    const user = useSelector((state) => state.auth?.login?.currentUser)
+    const user = useSelector((state) => state.auth?.login?.userData)
+    const [userInfo, setUserInfo] = useState(null)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const handleLogout = async() =>{
-        await logout(dispatch,navigate,user?.refreshToken)
+        await logout(dispatch,navigate)
     }
+    const getUserInfo = async()=>{
+        const res = await getUser(dispatch);
+        setUserInfo(res)
+    }
+    useEffect(()=>{
+        if(user){
+            getUserInfo()
+        }
+    },[])
+
     return (
         <>
             <div className='h-[38px] w-full bg-main flex justify-center items-center'>

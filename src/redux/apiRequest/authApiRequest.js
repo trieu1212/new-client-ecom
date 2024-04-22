@@ -1,9 +1,11 @@
 
 
+import { toast } from "react-toastify";
 import { apiLogout, apiRegister } from "../../apis/user";
 import { apiLogin } from "../../apis/user";
 import { loginError, loginStart, loginSuccess, logoutSuccess, registerError, registerStart, registerSuccess } from "../slice/authSlice";
 import Swal from 'sweetalert2'
+import { logoutUser } from "../slice/userSlice";
 
 export const register = async (data, dispatch, navigate) => {
     dispatch(registerStart())
@@ -15,7 +17,7 @@ export const register = async (data, dispatch, navigate) => {
         })
     } catch (error) {
         dispatch(registerError())
-        Swal.fire('Đăng ký thất bại!', response.message, 'error')
+        toast.error('Đăng ký thất bại!')
     }
 }
 
@@ -29,12 +31,14 @@ export const login = async (data,dispatch,navigate) =>{
         })
     } catch (error) {
         dispatch(loginError())
-        Swal.fire('Đăng nhập thất bại!', response.message, 'error')
+        toast.error('Đăng nhập thất bại!')
     }
 }
 
-export const logout = async (dispatch,navigate,refreshToken) =>{
-    const res = await apiLogout(refreshToken)
-    dispatch(logoutSuccess(res))
+export const logout = async (dispatch,navigate) =>{
+    const res = await apiLogout()
+    dispatch(logoutSuccess())
+    dispatch(logoutUser())
+    toast.success('Đăng xuất thành công!')
     navigate('/login')
 }

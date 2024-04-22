@@ -10,8 +10,12 @@ export const apiLogin = (data)=> axios({
     data
 })
 
-export const apiLogout = (refreshToken) => axios({
+export const apiLogout = () => axios({
     url:'/auth/logout',
     method:'POST',
-    data:{refreshToken}
+})
+
+export const apiGetUser = () => axios({
+    url: '/auth/current',
+    method: 'GET',
 })

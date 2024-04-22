@@ -124,7 +124,7 @@ const ProductDetail = () => {
           <h3 className='text-[20px] font-semibold py-[15px] border-b-2 border-main'>
             Sản phẩm liên quan
           </h3>
-          <div className='mt-8'>
+          <div className='mt-8 pb-3'>
             <Slider {...settings}>
               {relatedProducts.map((item) => {
                 return (
