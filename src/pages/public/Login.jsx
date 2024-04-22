@@ -1,13 +1,14 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { InputField, Button } from '../../components'
 import { Link, useNavigate } from 'react-router-dom'
 import { login } from '../../redux/apiRequest/authApiRequest'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 const Login = () => {
   const [username, setUsername] = React.useState('')
   const [password, setPassword] = React.useState('')
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const user = useSelector((state)=>state.user?.user)
   const handleLogin = useCallback(async () => {
     const data = {
       username,
@@ -15,9 +16,14 @@ const Login = () => {
     }
     await login(data,dispatch,navigate)
   }, [username, password])
+  useEffect(() => {
+    if (user) {
+      navigate('/') 
+    }
+  }, [user, navigate])
   return (
     <>
-      <div className='w-screen h-screen relative'>
+      {user===null && <div className='w-screen h-screen relative'>
         <img
           src="https://png.pngtree.com/thumb_back/fw800/back_our/20190628/ourmid/pngtree-beautiful-e-commerce-red-background-image_267394.jpg"
           alt="background"
@@ -38,7 +44,7 @@ const Login = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div>}
     </>
   )
 }

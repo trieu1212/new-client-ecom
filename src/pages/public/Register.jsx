@@ -1,12 +1,13 @@
 import React, { useCallback } from 'react'
 import { InputField,Button } from '../../components'
 import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { register } from '../../redux/apiRequest/authApiRequest'
 const Register = () => {
     const [username, setUsername] = React.useState('')
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
+    const user = useSelector((state)=>state.user?.user)
     const dispatch = useDispatch()
     const navigate= useNavigate()
     const handleRegister =  useCallback(async()=>{
@@ -17,9 +18,14 @@ const Register = () => {
       }
        await register(data,dispatch,navigate)
     },[username,password,email])
+    useEffect(() => {
+      if (user) {
+        navigate('/') 
+      }
+    }, [user, navigate])
     return (
       <>
-        <div className='w-screen h-screen relative'>
+        {user===null && <div className='w-screen h-screen relative'>
           <img
             src="https://png.pngtree.com/thumb_back/fw800/back_our/20190628/ourmid/pngtree-beautiful-e-commerce-red-background-image_267394.jpg"
             alt="background"
@@ -41,7 +47,7 @@ const Register = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div>}
       </>
     )
 }

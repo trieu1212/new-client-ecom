@@ -3,8 +3,11 @@ import Logo from './../assets/images/logo.jpg'
 import icons from '../ultils/icons'
 import { Link } from 'react-router-dom'
 import path from '../ultils/path'
+import { useSelector } from 'react-redux'
 const Header = () => {
     const { RiPhoneFill,MdEmail,BsCart3,FaUserLarge } = icons
+    const user = useSelector((state)=>state.user?.user)
+    console.log(user)
     return (
         <div className='flex justify-between items-center  w-main h-[110px] py-[35px]'>
             <Link to ={`/${path.HOME}`}>
@@ -28,11 +31,12 @@ const Header = () => {
                 <div className='flex flex-col px-6 border-r justify-center items-center gap-2'>
                     <BsCart3 color='red' size={18}/>
                     <span>
-                        0 items
+                        {user?.Carts?.length} items
                     </span>
                 </div>
-                <div className='flex items-center px-6  justify-center'>
+                <div className='flex items-center px-6 gap-2 justify-center'>
                     <FaUserLarge size={24}/>
+                    <span className='text-sm'>Profile</span>
                 </div>
             </div>
         </div>

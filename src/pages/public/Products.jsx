@@ -22,11 +22,14 @@ const Products = () => {
     const response = await apis.getApiProducts({}, { categoryId, sort })
     setProducts(response.product)
   }
+  const getAllProducts = async() =>{
+    const response = await apis.getApiProducts({}, { limit:20 })
+    setProducts(response.product)
+  }
   useEffect(() => {
     if(categoryName===":categoryName"){
-      const getAllProducts = async() =>{
-        const response = await apis.getApiProducts({}, { limit:20 })
-      }
+      getAllCategories()
+      getAllProducts()
     }else{
     getAllProductsByCategory()
     getAllCategories()

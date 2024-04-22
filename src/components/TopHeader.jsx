@@ -7,22 +7,20 @@ import { getUser } from '../redux/apiRequest/userApiRequest'
 const TopHeader = () => {
     const {RiLogoutBoxRLine} = icons
     const user = useSelector((state) => state.auth?.login?.userData)
-    const [userInfo, setUserInfo] = useState(null)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const handleLogout = async() =>{
         await logout(dispatch,navigate)
     }
     const getUserInfo = async()=>{
-        const res = await getUser(dispatch);
-        setUserInfo(res)
+          await getUser(dispatch);
     }
     useEffect(()=>{
         if(user){
             getUserInfo()
         }
     },[])
-
+    const userInfo = useSelector((state)=>state.user?.user)
     return (
         <>
             <div className='h-[38px] w-full bg-main flex justify-center items-center'>
@@ -30,14 +28,14 @@ const TopHeader = () => {
                     <div>
                         Đặt Online, Gọi ngay: 1800 000 8080
                     </div>
-                    {!user ? <Link to='/login'>
+                    {!userInfo ? <Link to='/login'>
                         <div className='hover:text-cyan-400'>
                             Đăng ký hoặc đăng nhập
                         </div>
                     </Link> : (
                         <div className='flex justify-center items-center gap-3'>
                             <span>
-                                Chào <span className='font-semibold'>{user?.username}</span>
+                                Chào <span className='font-semibold'>{userInfo?.username}</span>
                             </span>
                             <span 
                                 className='cursor-pointer p-1 hover:rounded-full hover:bg-gray-200 hover:text-main'
