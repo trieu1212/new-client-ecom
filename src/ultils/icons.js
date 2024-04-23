@@ -16,6 +16,7 @@ import { FaPhoneVolume } from "react-icons/fa";
 import { BsArrowReturnLeft } from "react-icons/bs";
 import { TiTick } from "react-icons/ti";
 import { MdOutlinePayment } from "react-icons/md";
+import { IoMdClose } from "react-icons/io";
 const icons = {
     RiPhoneFill,
     MdEmail,
@@ -34,7 +35,8 @@ const icons = {
     FaPhoneVolume,
     BsArrowReturnLeft,
     TiTick ,
-    MdOutlinePayment
+    MdOutlinePayment,
+    IoMdClose
 }
 
 export default icons

@@ -1,15 +1,25 @@
 import { Route, Routes } from 'react-router-dom'
 import { Login, Home, Public, Products, ProductDetail, Blogs, Register } from './pages/public'
-import {ScrollToTop} from './components'
+import { ScrollToTop, Cart } from './components'
 import path from './ultils/path'
 import { ToastContainer } from 'react-toastify'
+import { useDispatch, useSelector } from 'react-redux'
+import { isShowCart } from './redux/slice/userSlice'
 function App() {
-
-
+  const dispatch = useDispatch()
+  const showCart = useSelector((state) => state.user?.showCart)
   return (
     <>
-      <div className='min-h-screen font-main'>
-      <ScrollToTop />
+      <div className={`min-h-screen relative font-main`}>
+        {
+          showCart && <div
+            onClick={() => dispatch(isShowCart())}
+            className='h-screen fixed inset-0 bg-blend-overlay z-50 flex justify-end bg-black bg-opacity-50 overflow-hidden'
+          >
+            <Cart />
+          </div>
+        }
+        <ScrollToTop />
         <Routes>
           <Route path={path.PUBLIC} element={<Public />}>
             <Route path={path.HOME} element={<Home />} />

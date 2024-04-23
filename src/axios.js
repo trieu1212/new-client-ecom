@@ -30,18 +30,33 @@ instance.interceptors.response.use(function (response) {
       let data = localStorage.getItem('persist:root')
       if (data && typeof data === 'string') {
         data = JSON.parse(data)
+        let user = JSON.parse(data.user)
         let auth = JSON.parse(data.auth)
+        let _persist = JSON.parse(data._persist)
         let login = auth.login
         let register = auth.register
+        let userData = login.userData
+        let isFetching = login.isFetching
+        let isError = login.isError
+        let isSuccess = login.isSuccess
         const response = await instance.post('/auth/refresh')
         const { accessToken } = response
         let updatedData = {
           login:{
-            ...login,accessToken:accessToken
+            userData,
+            accessToken:accessToken,
+            isFetching,
+            isSuccess,
+            isError
           },
           register
         }
-        localStorage.setItem('persist:root', JSON.stringify({ auth: JSON.stringify(updatedData) }))
+        let newData = {
+          auth:JSON.stringify(updatedData),
+          user:JSON.stringify(user),
+          _persist:JSON.stringify(_persist)
+        }
+        localStorage.setItem('persist:root', JSON.stringify(newData))
         originalConfig.headers['authorization'] = `Bearer ${accessToken}`;
         return instance(originalConfig);
       }

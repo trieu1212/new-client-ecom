@@ -3,12 +3,14 @@ import Logo from './../assets/images/logo.jpg'
 import icons from '../ultils/icons'
 import { Link, useNavigate } from 'react-router-dom'
 import path from '../ultils/path'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
+import { isShowCart } from '../redux/slice/userSlice'
 const Header = () => {
     const { RiPhoneFill, MdEmail, BsCart3, FaUserLarge } = icons
     const user = useSelector((state) => state.user?.user)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const handleToProfile = () => {
         if (user === null) {
             Swal.fire({
@@ -44,8 +46,10 @@ const Header = () => {
                     </span>
                     <span>Online Support 24/7</span>
                 </div>
-                <div className='flex flex-col px-6 border-r justify-center items-center gap-2'>
-                    <BsCart3 color='red' size={18} />
+                <div
+                    className='flex flex-col px-6 border-r justify-center items-center gap-2'
+                >
+                    <BsCart3 color='red' size={18} onClick={()=>dispatch(isShowCart())} className='cursor-pointer'/>
                     <span>
                         {user?.Carts?.length > 0 ? user?.Carts?.length : 0} items
                     </span>
