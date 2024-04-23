@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import { Login, Home, Public, Products, ProductDetail, Blogs, Register } from './pages/public'
+import {ScrollToTop} from './components'
 import path from './ultils/path'
 import { ToastContainer } from 'react-toastify'
 function App() {
@@ -8,6 +9,7 @@ function App() {
   return (
     <>
       <div className='min-h-screen font-main'>
+      <ScrollToTop />
         <Routes>
           <Route path={path.PUBLIC} element={<Public />}>
             <Route path={path.HOME} element={<Home />} />

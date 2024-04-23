@@ -26,12 +26,14 @@ const Product = (props) => {
   const updateCart = async () => {
     try {
       const response = await apiUpdateCart(params, data)
-      if (response.status === 200) {
+      console.log(response.message)
+      if (response.message == 'Updated cart successfully') {
+        await getUser(dispatch);
         toast.success('Sản phẩm đã được cập nhật vào giỏ hàng.');
-      } else if (response.status === 201) {
+      } else if (response.message == 'Created cart successfully') {
+        await getUser(dispatch);
         toast.success('Sản phẩm đã được thêm vào giỏ hàng.');
       }
-      await getUser(dispatch);
     } catch (error) {
       toast.error('Thao tác thất bại. Vui lòng thử lại sau.');
     }

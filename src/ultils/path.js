@@ -9,5 +9,6 @@ const path = {
     BLOGS: 'blogs',
     PRODUCT_DETAIL: 'product/:id',
     REGISTER: 'register',
+    CART:'cart',
 }
 export default path

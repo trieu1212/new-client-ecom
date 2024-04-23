@@ -1,11 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import apis from '../../apis/app'
 import ReactImageMagnify from 'react-image-magnify';
 import { VNDPrice, formatPrice } from '../../ultils/helpers'
 import icons from '../../ultils/icons'
 import { Button, SelectQuantity, Product } from '../../components'
 import Slider from "react-slick";
+import { apiUpdateCart } from '../../apis/cart';
+import { useDispatch, useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
+import { getUser } from '../../redux/apiRequest/userApiRequest';
+import { toast } from 'react-toastify';
 const ProductDetail = () => {
   var settings = {
     dots: true,
@@ -19,6 +24,9 @@ const ProductDetail = () => {
   const [product, setProduct] = useState({})
   const [quantity, setQuantity] = useState(1)
   const [relatedProducts, setRelatedProducts] = useState([])
+  const user = useSelector((state)=>state.user?.user)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   useEffect(() => {
     const getProductDetail = async () => {
       const res = await apis.getOneApiProduct(id)
@@ -48,10 +56,39 @@ const ProductDetail = () => {
     }
   }, [quantity])
   const handleChangeQuantity = useCallback((x) => {
-    console.log(quantity)
-    if (x === 'minus') setQuantity(prev => +prev - 1)
+    if (x === 'minus') {
+      if (quantity === 1) {return;}
+      else{
+        setQuantity(prev => +prev - 1);
+      }
+    }
     if (x === 'plus') setQuantity(prev => +prev + 1)
-  }, [])
+  }, [quantity])
+  const handleAddToCart = useCallback(async()=>{
+    if(user){
+      const data = {
+        productId: id,
+        quantity:quantity
+      }
+      const response = await apiUpdateCart({userId:user?.id},data)
+      if (response.message == 'Updated cart successfully') {
+        await getUser(dispatch);
+        toast.success('Sản phẩm đã được cập nhật vào giỏ hàng.');
+      } else if (response.message == 'Created cart successfully') {
+        await getUser(dispatch);
+        toast.success('Sản phẩm đã được thêm vào giỏ hàng.');
+      }
+    }else{
+      Swal.fire({
+        title: 'Thông báo!',
+        text: 'Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng',
+        icon: 'info',
+        cancelButtonText: 'Hủy',
+        showCancelButton: true,
+        confirmButtonText: 'Đăng nhập',
+      }).then((res) => res.isConfirmed && navigate('/login'))
+    }
+  },[])
   const renderStart = (number) => {
     const stars = []
     for (let i = 0; i < +number; i++) {
@@ -100,6 +137,7 @@ const ProductDetail = () => {
               <Button
                 name='Thêm vào giỏ hàng'
                 fw={true}
+                handleOnClick={handleAddToCart}
               >
                 Thêm vào giỏ hàng
               </Button>
