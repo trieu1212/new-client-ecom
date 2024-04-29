@@ -41,8 +41,8 @@ const Register = () => {
               <h3 className='font-semibold text-[28px] text-main text-center mb-8'>Đăng ký</h3>
               <InputField data={username} setData={setUsername} placeholder='USERNAME' />
               <InputField data={email} setData={setEmail} placeholder='EMAIL' />
-              <InputField data={phone} setData={setPhone} placeholder='PHONE' type='number'/>
-              <InputField data={address} setData={setAddress} placeholder='ADDRESS' />
+              {/* <InputField data={phone} setData={setPhone} placeholder='PHONE' type='number'/>
+              <InputField data={address} setData={setAddress} placeholder='ADDRESS' /> */}
               <InputField data={password} setData={setPassword} placeholder='PASSWORD' type='password' />
               <Button
                 name='Đăng Ký'

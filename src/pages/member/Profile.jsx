@@ -14,26 +14,27 @@ const Profile = (props) => {
   const [phone, setPhone] = useState(user?.phone)
   const [address, setAddress] = useState(user?.address)
   const dispatch = useDispatch()
-  const handleUpdateUserInfo = async() =>{
-    const data={
+  const handleUpdateUserInfo = async () => {
+    const data = {
       username,
       email,
       phone,
       address
     }
-    const response = await apiUpdateUser(data,user?.id)
-    if(response.message === "Cập nhật người dùng thành công"){
+    const response = await apiUpdateUser(data, user?.id)
+    if (response.message === "Cập nhật người dùng thành công") {
       toast.success(response.message)
       await getUser(dispatch)
     }
   }
   return (
     <>
-      <div className='w-main mx-auto flex flex-col '>
-        <h2 className='font-semibold text-[18px] mb-8 border-b border-gray-400 py-4 '>
-          Hồ Sơ Của Tôi
-        </h2>
-        <div className='w-[750px] flex flex-col gap-2 border p-4 pl-12 rounded-lg shadow-xl overflow-y-auto'>
+      <h2 className='font-semibold text-[18px] mb-8 border-b border-gray-400 py-4 '>
+        Hồ Sơ Của Tôi
+      </h2>
+      <div className='w-main mx-auto flex flex-col items-center'>
+
+        <div className='w-[1000px] flex flex-col  gap-2 border p-4 pl-12 rounded-lg shadow-xl overflow-y-auto'>
           <div className='flex gap-8 items-center'>
             <span className='font-semibold'>Họ và tên: </span>
             <div className='w-[400px]'>
@@ -79,10 +80,12 @@ const Profile = (props) => {
             </div>
           </div>
         </div>
-        <Button
-          name='Lưu thay đổi'
-          handleOnClick={handleUpdateUserInfo}
-        />
+        <div className='mt-3'>
+          <Button
+            name='Lưu thay đổi'
+            handleOnClick={handleUpdateUserInfo}
+          />
+        </div>
       </div>
     </>
   )

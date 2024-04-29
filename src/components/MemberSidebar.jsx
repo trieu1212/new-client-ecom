@@ -10,7 +10,7 @@ const MemberSidebar = (props) => {
             <div className='flex flex-col gap-9'>
                 <div>
                     <div className='flex items-center gap-2'>
-                        <FaUserCircle size={60} />
+                        <FaUserCircle size={50} />
                         <span className='font-semibold text-[24px]'>{user?.username}</span>
                     </div>
                 </div>

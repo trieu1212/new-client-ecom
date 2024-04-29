@@ -20,6 +20,7 @@ import { IoMdClose } from "react-icons/io";
 import { IoRemoveCircle } from "react-icons/io5";
 import { FaUserCircle } from "react-icons/fa";
 import { RiBillFill } from "react-icons/ri";
+import { FaTruckField } from "react-icons/fa6";
 const icons = {
     RiPhoneFill,
     MdEmail,
@@ -42,7 +43,8 @@ const icons = {
     IoMdClose,
     IoRemoveCircle,
     FaUserCircle,
-    RiBillFill
+    RiBillFill,
+    FaTruckField
 }
 
 export default icons
