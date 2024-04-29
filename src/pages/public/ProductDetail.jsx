@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { createSearchParams, useNavigate, useParams } from 'react-router-dom'
 import apis from '../../apis/app'
 import ReactImageMagnify from 'react-image-magnify';
 import { VNDPrice, formatPrice } from '../../ultils/helpers'
@@ -47,28 +47,21 @@ const ProductDetail = () => {
       getRelatedProducts()
     }
   }, [id])
-  const handleQuantity = useCallback((number) => {
-    if (!Number(number) || Number(number) < 1) {
-      return
-    }
-    else {
-      setQuantity(number)
-    }
-  }, [quantity])
-  const handleChangeQuantity = useCallback((x) => {
+  const handleQuantity = (number) => {
+    if (+number>1) setQuantity(number)
+  }
+  const handleChangeQuantity = (x) => {
+    if(x==='minus' && quantity===1) return;
     if (x === 'minus') {
-      if (quantity === 1) {return;}
-      else{
-        setQuantity(prev => +prev - 1);
-      }
+      setQuantity(prev => +prev - 1);
     }
     if (x === 'plus') setQuantity(prev => +prev + 1)
-  }, [quantity])
-  const handleAddToCart = useCallback(async()=>{
+  }
+  const handleAddToCart = async()=>{
     if(user){
       const data = {
-        productId: id,
-        quantity:quantity
+        productId: id || product?.id,
+        quantity
       }
       const response = await apiUpdateCart({userId:user?.id},data)
       if (response.message == 'Updated cart successfully') {
@@ -86,9 +79,12 @@ const ProductDetail = () => {
         cancelButtonText: 'Hủy',
         showCancelButton: true,
         confirmButtonText: 'Đăng nhập',
-      }).then((res) => res.isConfirmed && navigate('/login'))
+      }).then(async(res) => res.isConfirmed && navigate({
+        pathname:'/login',
+        search: createSearchParams({redirect:location.pathname}).toString()
+      }))
     }
-  },[])
+  }
   const renderStart = (number) => {
     const stars = []
     for (let i = 0; i < +number; i++) {

@@ -10,5 +10,8 @@ const path = {
     PRODUCT_DETAIL: 'product/:id',
     REGISTER: 'register',
     CART:'cart',
+    MEMBER:'member',
+    CHECKOUT:'checkout',
+    PROFILE:'profile',
 }
 export default path

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react'
 import { InputField, Button } from '../../components'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { login } from '../../redux/apiRequest/authApiRequest'
 import { useDispatch, useSelector } from 'react-redux'
 const Login = () => {
@@ -9,12 +9,14 @@ const Login = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const user = useSelector((state)=>state.user?.user)
+  const [searchParams] = useSearchParams()
+  const redirect = searchParams.get('redirect')
   const handleLogin = useCallback(async () => {
     const data = {
       username,
       password
     }
-    await login(data,dispatch,navigate)
+    await login(data,dispatch,navigate,redirect)
   }, [username, password])
   useEffect(() => {
     if (user) {

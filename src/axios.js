@@ -57,8 +57,10 @@ instance.interceptors.response.use(function (response) {
           _persist:JSON.stringify(_persist)
         }
         localStorage.setItem('persist:root', JSON.stringify(newData))
+        await new Promise(resolve => setTimeout(resolve, 500));
         originalConfig.headers['authorization'] = `Bearer ${accessToken}`;
-        return instance(originalConfig);
+        const retryResponse = await instance(originalConfig);
+        return retryResponse;
       }
     } catch (err) {
       if (err.response && err.response.status === 400) {

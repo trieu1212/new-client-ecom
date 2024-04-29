@@ -3,14 +3,26 @@ const userSlice = createSlice({
     name: 'user',
     initialState: {
         user:null,
+        carts:[],
         showCart:false
     },
     reducers: {
         getUserInfo: (state,action) => {
             state.user = action.payload
+            state.carts = action.payload.Carts
         },
         isShowCart:(state) =>{
             state.showCart = !state.showCart
+        },
+        updateCart:(state,action) =>{
+            const {productId,quantity} = action.payload
+            const updateCart = JSON.parse(JSON.stringify(state.carts))
+            state.carts = updateCart.map((item)=>{
+                if(item.productId === productId){
+                    return {...item,quantity:quantity}
+                }
+                return item
+            })
         },
 
         logoutUser:(state) => {
@@ -22,5 +34,6 @@ export default userSlice.reducer
 export const {
     getUserInfo,
     logoutUser,
-    isShowCart
+    isShowCart,
+    updateCart
 } = userSlice.actions

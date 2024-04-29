@@ -7,6 +7,8 @@ const Register = () => {
     const [username, setUsername] = React.useState('')
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
+    const [phone, setPhone] = React.useState(0)
+    const [address, setAddress] = React.useState('')
     const user = useSelector((state)=>state.user?.user)
     const dispatch = useDispatch()
     const navigate= useNavigate()
@@ -14,8 +16,11 @@ const Register = () => {
       const data = {
         username,
         email,
-        password
+        password,
+        phone,
+        address
       }
+      console.log(data)
        await register(data,dispatch,navigate)
     },[username,password,email])
     useEffect(() => {
@@ -36,6 +41,8 @@ const Register = () => {
               <h3 className='font-semibold text-[28px] text-main text-center mb-8'>Đăng ký</h3>
               <InputField data={username} setData={setUsername} placeholder='USERNAME' />
               <InputField data={email} setData={setEmail} placeholder='EMAIL' />
+              <InputField data={phone} setData={setPhone} placeholder='PHONE' type='number'/>
+              <InputField data={address} setData={setAddress} placeholder='ADDRESS' />
               <InputField data={password} setData={setPassword} placeholder='PASSWORD' type='password' />
               <Button
                 name='Đăng Ký'

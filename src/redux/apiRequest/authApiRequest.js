@@ -21,13 +21,13 @@ export const register = async (data, dispatch, navigate) => {
     }
 }
 
-export const login = async (data,dispatch,navigate) =>{
+export const login = async (data,dispatch,navigate,redirect) =>{
     dispatch(loginStart())
     try {
         const res = await apiLogin(data)
         dispatch(loginSuccess(res))
         Swal.fire('Đăng nhập thành công!', 'Chuyển hướng đến trang chính...', 'success').then(() => {
-            navigate('/')
+            redirect? navigate(redirect):navigate('/')
         })
     } catch (error) {
         dispatch(loginError())

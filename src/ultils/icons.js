@@ -1,4 +1,4 @@
-import {RiPhoneFill} from 'react-icons/ri'
+import { RiPhoneFill } from 'react-icons/ri'
 import { MdEmail } from "react-icons/md";
 import { BsCart3 } from "react-icons/bs";
 import { FaUserLarge } from "react-icons/fa6";
@@ -17,6 +17,9 @@ import { BsArrowReturnLeft } from "react-icons/bs";
 import { TiTick } from "react-icons/ti";
 import { MdOutlinePayment } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
+import { IoRemoveCircle } from "react-icons/io5";
+import { FaUserCircle } from "react-icons/fa";
+import { RiBillFill } from "react-icons/ri";
 const icons = {
     RiPhoneFill,
     MdEmail,
@@ -34,9 +37,12 @@ const icons = {
     FaShieldHeart,
     FaPhoneVolume,
     BsArrowReturnLeft,
-    TiTick ,
+    TiTick,
     MdOutlinePayment,
-    IoMdClose
+    IoMdClose,
+    IoRemoveCircle,
+    FaUserCircle,
+    RiBillFill
 }
 
 export default icons

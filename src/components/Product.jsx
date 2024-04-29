@@ -15,18 +15,16 @@ const Product = (props) => {
   const user = useSelector(state => state.auth?.login?.userData)
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const data = {
-    productId: id,
-    quantity: 1
-  };
-
-  const params = {
-    userId: user?.id
-  };
-  const updateCart = async () => {
+  const updateCart = async (productId) => {
     try {
+      const data = {
+        productId: +productId || id,
+        quantity: 1
+      };
+      const params = {
+        userId: user?.id
+      };
       const response = await apiUpdateCart(params, data)
-      console.log(response.message)
       if (response.message == 'Updated cart successfully') {
         await getUser(dispatch);
         toast.success('Sản phẩm đã được cập nhật vào giỏ hàng.');
@@ -35,13 +33,13 @@ const Product = (props) => {
         toast.success('Sản phẩm đã được thêm vào giỏ hàng.');
       }
     } catch (error) {
-      toast.error('Thao tác thất bại. Vui lòng thử lại sau.');
+      // toast.error('Thao tác thất bại. Vui lòng thử lại sau.');
+      console.log(error)
     }
   }
-  const handleClickOption = async (x) => {
-    if (x === 'addCart') {
+  const handleClickOption = async (productId) => {
       if (user) {
-        await updateCart()
+        await updateCart(productId)
       }
       else {
         Swal.fire({
@@ -53,7 +51,6 @@ const Product = (props) => {
           confirmButtonText: 'Đăng nhập',
         }).then((res) => res.isConfirmed && navigate('/login'))
       }
-    }
   }
   const renderStart = (number) => {
     const stars = []
@@ -86,7 +83,7 @@ const Product = (props) => {
               <div className='absolute bottom-16 left-0 right-0 flex justify-center gap-8 animate-slide-top'>
                 <span title='Xem nhanh'><SelectOption icon={<FaRegEye />} /></span>
                 <Link to={`/product/${id}`}><span title='Xem chi tiết'><SelectOption icon={<IoIosMenu />} /></span></Link>
-                <span title='Thêm vào giỏ' onClick={() => handleClickOption('addCart')}><SelectOption icon={<FaCartShopping />} /></span>
+                <span title='Thêm vào giỏ' onClick={() => handleClickOption(id)}><SelectOption icon={<FaCartShopping />} /></span>
               </div>
             }
             <div className='flex flex-col text-center gap-2 mt-2'>
@@ -97,13 +94,13 @@ const Product = (props) => {
           </div>)
           : (
             <div className='flex flex-col w-full relative mr-2 px-[10px] border hover:shadow-xl hover:shadow-orange-900'>
-                <img src={image} alt={title} className='px-8 w-50 h-48 object-cover mb-9' />
+              <img src={image} alt={title} className='px-8 w-50 h-48 object-cover mb-9' />
               {
                 isShowOption &&
                 <div className='absolute bottom-16 left-0 right-0 flex justify-center gap-8 animate-slide-top'>
                   <span title='Xem nhanh'><SelectOption icon={<FaRegEye />} /></span>
                   <Link to={`/product/${id}`}><span title='Xem chi tiết'><SelectOption icon={<IoIosMenu />} /></span></Link>
-                  <span title='Thêm vào giỏ' onClick={() => handleClickOption('addCart')}><SelectOption icon={<FaCartShopping />} /></span>
+                  <span title='Thêm vào giỏ' onClick={() => handleClickOption(id)}><SelectOption icon={<FaCartShopping />} /></span>
                 </div>
               }
               <div className='flex flex-col text-center gap-2 mt-2'>

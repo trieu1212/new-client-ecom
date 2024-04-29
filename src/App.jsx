@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
-import { Login, Home, Public, Products, ProductDetail, Blogs, Register } from './pages/public'
+import { Login, Home, Public, Products, ProductDetail, Blogs, Register, CartDetail } from './pages/public'
+import {Member,Checkout,Profile} from './pages/member'
 import { ScrollToTop, Cart } from './components'
 import path from './ultils/path'
 import { ToastContainer } from 'react-toastify'
@@ -26,7 +27,12 @@ function App() {
             <Route path={path.PRODUCTS} element={<Products />} />
             <Route path={path.PRODUCT_DETAIL} element={<ProductDetail />} />
             <Route path={path.BLOGS} element={<Blogs />} />
+            <Route path={path.CART} element={<CartDetail />} />
           </Route>
+          <Route path={path.MEMBER} element={<Member/>}>
+            <Route path={path.PROFILE} element={<Profile/>}/>
+          </Route>
+          <Route path={path.CHECKOUT} element={<Checkout/>}/>
           <Route path={path.LOGIN} element={<Login />} />
           <Route path={path.REGISTER} element={<Register />} />
         </Routes>
