@@ -21,6 +21,8 @@ import { IoRemoveCircle } from "react-icons/io5";
 import { FaUserCircle } from "react-icons/fa";
 import { RiBillFill } from "react-icons/ri";
 import { FaTruckField } from "react-icons/fa6";
+import { GiLargeDress } from "react-icons/gi";
+import { GiClothes } from "react-icons/gi";
 const icons = {
     RiPhoneFill,
     MdEmail,
@@ -44,7 +46,9 @@ const icons = {
     IoRemoveCircle,
     FaUserCircle,
     RiBillFill,
-    FaTruckField
+    FaTruckField,
+    GiLargeDress,
+    GiClothes
 }
 
 export default icons

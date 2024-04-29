@@ -4,7 +4,7 @@ import {createSlug} from '../ultils/helpers'
 import icons from '../ultils/icons'
 import { apis } from '../apis'
 const Sidebar = () => {
-  const {AiOutlineMenu,IoShirtSharp} = icons
+  const {AiOutlineMenu,IoShirtSharp,GiClothes} = icons
   const [categories, setCategories] = useState([])
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const Sidebar = () => {
               key={createSlug(category.name)}
               to={`products/${category.id? category.id : null}/${category.name}`}
             >
-              <IoShirtSharp />
+              <GiClothes size={24}/>
               {category.name}
             </NavLink>
           )
