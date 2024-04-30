@@ -16,6 +16,19 @@ const apis = {
         url:`/product/${id}/`,
         method:'GET'
     }),
+    createComment:(data,userId)=>axios({
+        url:`/comment/create/${userId}/`,
+        method:'POST',
+        data:data
+    }),
+    getProductComments: (productId) => axios({
+        url:`/comment/${productId}/`,
+        method:'GET'
+    }),
+    deleteComment:(commentId,userId)=>axios({
+        url:`/comment/delete/${commentId}/${userId}`,
+        method:'DELETE'
+    }),
 }
 
 export default apis

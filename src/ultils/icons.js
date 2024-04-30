@@ -23,6 +23,8 @@ import { RiBillFill } from "react-icons/ri";
 import { FaTruckField } from "react-icons/fa6";
 import { GiLargeDress } from "react-icons/gi";
 import { GiClothes } from "react-icons/gi";
+import { GiFurShirt } from "react-icons/gi";
+import { FaPeopleGroup } from "react-icons/fa6";
 const icons = {
     RiPhoneFill,
     MdEmail,
@@ -48,7 +50,9 @@ const icons = {
     RiBillFill,
     FaTruckField,
     GiLargeDress,
-    GiClothes
+    GiClothes,
+    GiFurShirt,
+    FaPeopleGroup
 }
 
 export default icons

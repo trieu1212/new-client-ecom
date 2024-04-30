@@ -9,6 +9,7 @@ import { isShowCart } from '../redux/slice/userSlice'
 const Header = () => {
     const { RiPhoneFill, MdEmail, BsCart3, FaUserLarge, FaUserCircle } = icons
     const user = useSelector((state) => state.user?.user)
+    const isAdmin = useSelector((state)=>state.auth.login?.userData?.isAdmin)
     const dispatch = useDispatch()
     const [isShowDropdown, setIsShowDropdown] = React.useState(false)
     return (
@@ -54,6 +55,9 @@ const Header = () => {
                                     <Link className='p-1 flex items-center justify-center w-full hover:bg-main hover:text-white font-semibold text-[14px]' to={`/${path.CART}`}>
                                         Giỏ hàng
                                     </Link>
+                                    {isAdmin===1 && <Link className='p-1 flex items-center justify-center w-full hover:bg-main hover:text-white font-semibold text-[14px]' to={`/${path.ADMIN}/${path.MANAGE_PRODUCT}`}>
+                                        Admin
+                                    </Link>}
                                 </div>
                             }
                         </div>

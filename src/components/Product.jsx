@@ -24,33 +24,36 @@ const Product = (props) => {
       const params = {
         userId: user?.id
       };
-      const response = await apiUpdateCart(params, data)
-      if (response.message == 'Updated cart successfully') {
-        await getUser(dispatch);
-        toast.success('Sản phẩm đã được cập nhật vào giỏ hàng.');
-      } else if (response.message == 'Created cart successfully') {
-        await getUser(dispatch);
-        toast.success('Sản phẩm đã được thêm vào giỏ hàng.');
-      }
+      const setTimeOutId = setTimeout(async () => {
+        const response = await apiUpdateCart(params, data)
+        if (response.message == 'Updated cart successfully') {
+          await getUser(dispatch);
+          toast.success('Sản phẩm đã được cập nhật vào giỏ hàng.');
+        } else if (response.message == 'Created cart successfully') {
+          await getUser(dispatch);
+          toast.success('Sản phẩm đã được thêm vào giỏ hàng.');
+        }
+      }, 300)
+      return () => clearTimeout(setTimeOutId)
     } catch (error) {
       // toast.error('Thao tác thất bại. Vui lòng thử lại sau.');
       console.log(error)
     }
   }
   const handleClickOption = async (productId) => {
-      if (user) {
-        await updateCart(productId)
-      }
-      else {
-        Swal.fire({
-          title: 'Thông báo!',
-          text: 'Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng',
-          icon: 'info',
-          cancelButtonText: 'Hủy',
-          showCancelButton: true,
-          confirmButtonText: 'Đăng nhập',
-        }).then((res) => res.isConfirmed && navigate('/login'))
-      }
+    if (user) {
+      await updateCart(productId)
+    }
+    else {
+      Swal.fire({
+        title: 'Thông báo!',
+        text: 'Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng',
+        icon: 'info',
+        cancelButtonText: 'Hủy',
+        showCancelButton: true,
+        confirmButtonText: 'Đăng nhập',
+      }).then((res) => res.isConfirmed && navigate('/login'))
+    }
   }
   const renderStart = (number) => {
     const stars = []

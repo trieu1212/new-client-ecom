@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { createSearchParams, useNavigate, useParams } from 'react-router-dom'
+import React, { Fragment, useCallback, useEffect, useState } from 'react'
+import { Link, createSearchParams, useNavigate, useParams } from 'react-router-dom'
 import apis from '../../apis/app'
 import ReactImageMagnify from 'react-image-magnify';
 import { VNDPrice, formatPrice } from '../../ultils/helpers'
 import icons from '../../ultils/icons'
-import { Button, SelectQuantity, Product } from '../../components'
+import { Button, SelectQuantity, Product, Comment, InputField } from '../../components'
 import Slider from "react-slick";
 import { apiUpdateCart } from '../../apis/cart';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,21 +19,46 @@ const ProductDetail = () => {
     slidesToShow: 3,
     slidesToScroll: 1
   };
-  const { FaRegStar, FaStar, FaTruck, FaShieldHeart, FaPhoneVolume, BsArrowReturnLeft, TiTick, MdOutlinePayment } = icons
+  const { FaRegStar, FaStar, FaTruck, FaShieldHeart, FaPhoneVolume, BsArrowReturnLeft, TiTick, MdOutlinePayment, FaUserLarge } = icons
   const { id } = useParams()
   const [product, setProduct] = useState({})
   const [quantity, setQuantity] = useState(1)
   const [relatedProducts, setRelatedProducts] = useState([])
-  const user = useSelector((state)=>state.user?.user)
+  const [comments, setComments] = useState([{}])
+  const [comment, setComment] = useState('')
+  const user = useSelector((state) => state.user?.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const getProductComments = async () => {
+    const res = await apis.getProductComments(id)
+    setComments(res)
+  }
   useEffect(() => {
     const getProductDetail = async () => {
       const res = await apis.getOneApiProduct(id)
       setProduct(res)
     }
     getProductDetail()
-  }, [id])
+    getProductComments()
+  }, [id,comment])
+  const handleComment = async()=>{
+    const data={
+      comment:comment,
+      productId:id
+    }
+    const res = await apis.createComment(data, user?.id)
+    if(res.message === "Thêm đánh giá thành công"){
+      setComment('')
+      toast.success(res.message)
+    }
+  }
+  const handleDeleteComment = async (commentId) => {
+    const res = await apis.deleteComment(commentId, user?.id)
+    if(res.message === "Xóa đánh giá thành công"){
+      toast.success(res.message)
+      await getProductComments()
+    }
+  }
   const getRelatedProducts = async () => {
     const query = {
       categoryId: product?.categoryId,
@@ -48,30 +73,39 @@ const ProductDetail = () => {
     }
   }, [id])
   const handleQuantity = (number) => {
-    if (+number>1) setQuantity(number)
+    if (+number > 1) setQuantity(number)
   }
   const handleChangeQuantity = (x) => {
-    if(x==='minus' && quantity===1) return;
+    if (x === 'minus' && quantity === 1) return;
     if (x === 'minus') {
       setQuantity(prev => +prev - 1);
     }
     if (x === 'plus') setQuantity(prev => +prev + 1)
   }
-  const handleAddToCart = async()=>{
-    if(user){
+  const handleAddToCart = async () => {
+    if (user) {
       const data = {
         productId: id || product?.id,
         quantity
       }
-      const response = await apiUpdateCart({userId:user?.id},data)
-      if (response.message == 'Updated cart successfully') {
-        await getUser(dispatch);
-        toast.success('Sản phẩm đã được cập nhật vào giỏ hàng.');
-      } else if (response.message == 'Created cart successfully') {
-        await getUser(dispatch);
-        toast.success('Sản phẩm đã được thêm vào giỏ hàng.');
+      const setTimeOutId = setTimeout(async () => {
+        const response = await apiUpdateCart({ userId: user?.id }, {
+          productId: id || product?.id,
+          quantity
+        })
+        if (response.message == 'Updated cart successfully') {
+          await getUser(dispatch);
+          toast.success('Sản phẩm đã được cập nhật vào giỏ hàng.');
+        } else if (response.message == 'Created cart successfully') {
+          await getUser(dispatch);
+          toast.success('Sản phẩm đã được thêm vào giỏ hàng.');
+        }
+      }, 300)
+      return () => {
+        clearTimeout(setTimeOutId)
       }
-    }else{
+
+    } else {
       Swal.fire({
         title: 'Thông báo!',
         text: 'Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng',
@@ -79,9 +113,9 @@ const ProductDetail = () => {
         cancelButtonText: 'Hủy',
         showCancelButton: true,
         confirmButtonText: 'Đăng nhập',
-      }).then(async(res) => res.isConfirmed && navigate({
-        pathname:'/login',
-        search: createSearchParams({redirect:location.pathname}).toString()
+      }).then(async (res) => res.isConfirmed && navigate({
+        pathname: '/login',
+        search: createSearchParams({ redirect: location.pathname }).toString()
       }))
     }
   }
@@ -151,6 +185,59 @@ const ProductDetail = () => {
                 <span className='flex items-center gap-2'> <TiTick FaTruck size={36} color='red' /> Mở hộp kiểm tra nhận hàng</span>
                 <span className='flex items-center gap-2'> <MdOutlinePayment FaTruck size={34} color='red' /> Đa dạng hình thức thanh toán</span>
               </div>
+            </div>
+          </div>
+        </div>
+        <div className='w-main m-auto mt-16'>
+          <h3 className='text-[20px] font-semibold py-[15px] border-b-2 border-main'>Đánh giá sản phẩm</h3>
+          <div className='flex flex-col'>
+            <div className='border-b border-main'>
+              {!user && <div className='text-center py-4 font-semibold text-[24px]'><Link to={`/login`} className='hover:text-main'>Đăng nhập</Link> để đánh giá sản phẩm</div>}
+              {user &&
+                <>
+                  <div className='flex justify-around p-4'>
+                    <div className='flex flex-col items-center'>
+                      <span>
+                        <FaUserLarge size={36} color='gray' />
+                      </span>
+                      <span>
+                        {user?.username}
+                      </span>
+                    </div>
+                    <div className=''>
+                      <textarea name="" id="" cols="110" rows="3"
+                        className='border border-gray-500 p-3'
+                        placeholder='Nhập bình luận...'
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                      ></textarea>
+                    </div>
+                  </div>
+                  <div className='text-center mb-4'>
+                    <Button
+                      name='Gửi đánh giá'
+                      handleOnClick={handleComment}
+                    />
+                  </div>
+                </>
+              }
+            </div>
+            <div className='flex flex-col gap-2 mt-4'>
+              {comments.length === 0 && <div className='text-center py-4 font-semibold text-[24px]'>Chưa có đánh giá nào</div>}
+              {comments.map((item) => {
+                return (
+                  <Fragment key={item.id}>
+                    <Comment
+                      userId={item?.User?.id}
+                      username={item?.User?.username}
+                      comment={item?.comment}
+                      createdAt={item?.createdAt}
+                      commentId={item?.id}
+                      handleDeleteComment={handleDeleteComment}
+                    />
+                  </Fragment>
+                )
+              })}
             </div>
           </div>
         </div>

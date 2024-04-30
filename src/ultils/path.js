@@ -13,5 +13,9 @@ const path = {
     MEMBER:'member',
     CHECKOUT:'checkout',
     PROFILE:'profile',
+    ADMIN: 'admin',
+    MANAGE_PRODUCT: 'manage-product',
+    MANAGE_USER: 'manage-user',
+    CREATE_PRODUCT: 'create-product',
 }
 export default path

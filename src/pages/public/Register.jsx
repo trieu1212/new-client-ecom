@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect } from 'react'
-import { InputField,Button } from '../../components'
+import { InputField,Button, Loading } from '../../components'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { register } from '../../redux/apiRequest/authApiRequest'
+import { showModal } from '../../redux/slice/authSlice'
 const Register = () => {
     const [username, setUsername] = React.useState('')
     const [email, setEmail] = React.useState('')
@@ -20,8 +21,9 @@ const Register = () => {
         phone,
         address
       }
-      console.log(data)
-       await register(data,dispatch,navigate)
+      dispatch(showModal({isShowModal:true,modalChildren:<Loading/>}))
+      await register(data,dispatch,navigate)
+      dispatch(showModal({isShowModal:false,modalChildren:null}))
     },[username,password,email])
     useEffect(() => {
       if (user) {

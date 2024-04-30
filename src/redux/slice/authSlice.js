@@ -13,7 +13,9 @@ const authSlice = createSlice({
             isFetching: false,
             isSuccess: false,
             isError: false,
-        }
+        },
+        isShowModal:false,
+        modalChildren:null
     },
     reducers: {
         registerStart: (state) => {
@@ -51,6 +53,10 @@ const authSlice = createSlice({
         logoutSuccess:(state) =>{
             state.login.accessToken = null
             state.login.userData = null
+        },
+        showModal:(state,action)=>{
+            state.isShowModal = action.payload.isShowModal
+            state.modalChildren = action.payload.modalChildren
         }
     }
 })
@@ -62,5 +68,6 @@ export const {
     loginStart,
     loginSuccess,
     loginError,
-    logoutSuccess
+    logoutSuccess,
+    showModal
 } = authSlice.actions

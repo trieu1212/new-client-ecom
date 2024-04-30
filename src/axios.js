@@ -2,7 +2,7 @@ import axios from "axios";
 
 const instance = axios.create({
   baseURL: 'http://localhost:7000/api',
-  withCredentials:true
+  withCredentials:true,
 });
 // Add a request interceptor
 instance.interceptors.request.use(function (config) {
@@ -35,6 +35,8 @@ instance.interceptors.response.use(function (response) {
         let _persist = JSON.parse(data._persist)
         let login = auth.login
         let register = auth.register
+        let isShowModal = auth.isShowModal
+        let modalChildren = auth.modalChildren
         let userData = login.userData
         let isFetching = login.isFetching
         let isError = login.isError
@@ -49,7 +51,9 @@ instance.interceptors.response.use(function (response) {
             isSuccess,
             isError
           },
-          register
+          register,
+          isShowModal,
+          modalChildren
         }
         let newData = {
           auth:JSON.stringify(updatedData),
