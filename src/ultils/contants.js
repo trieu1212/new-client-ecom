@@ -21,13 +21,13 @@ const {GiFurShirt,FaPeopleGroup} = icons
 export const adminSidebar = [
     {
         id:1,
-        type:'single',
+        type:'SINGLE',
         value:'Quản lý người dùng',
         path:`/${path.ADMIN}/${path.MANAGE_PRODUCT}`,
     },
     {
         id:2,
-        type:'parent',
+        type:'PARENT',
         submenu: [
             {
                 text: 'Quản lý sản phẩm',

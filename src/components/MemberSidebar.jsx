@@ -16,7 +16,7 @@ const MemberSidebar = (props) => {
                 </div>
                 <div className='flex flex-col gap-4'>
                     <div className='flex items-center gap-2'>
-                        <FaUserLarge size={24} />
+                        <FaUserLarge size={36} />
                         <span
                             className={`font-medium text-[18px] hover:text-main cursor-pointer ${option === 'Thông tin tài khoản' ? 'text-main' : ''}`}
                             onClick={() => setOption('Thông tin tài khoản')}
@@ -26,7 +26,7 @@ const MemberSidebar = (props) => {
                     </div>
 
                     <div className='flex items-center gap-2'>
-                        <RiBillFill size={24} />
+                        <RiBillFill size={36} />
                         <span
                             className={`font-medium text-[18px] hover:text-main cursor-pointer ${option === 'Đơn hàng của tôi' ? 'text-main' : ''}`}
                             onClick={() => setOption('Đơn hàng của tôi')}

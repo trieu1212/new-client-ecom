@@ -15,11 +15,10 @@ const AdminSidebar = () => {
                     </Link>
                     <small>Admin</small>
                 </div>
-                <div>
-                    {console.log(adminSidebar)}
-                    {adminSidebar.map((item) => {
-                        <Fragment key={item.id}>
-                            {item.type === 'single' &&
+                <div className='text-white'>
+                    {adminSidebar.length>0 && adminSidebar.map((item) => {
+                        <div key={item.id}>
+                            {item.type === 'SINGLE' &&
                                 <NavLink to={item.path}>
                                     <span>
                                         {item.value === 'Quản lý người dùng' && <FaPeopleGroup />}
@@ -29,7 +28,7 @@ const AdminSidebar = () => {
                                     </span>
                                 </NavLink>
                             }
-                            {item.type === 'parent' &&
+                            {item.type === 'PARENT' &&
                                 <div>
                                     <div>
                                         <span>
@@ -48,7 +47,7 @@ const AdminSidebar = () => {
                                     </div>
                                 </div>
                             }
-                        </Fragment>
+                        </div>
                     })}
                 </div>
             </div>

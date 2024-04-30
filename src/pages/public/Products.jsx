@@ -13,7 +13,7 @@ const Products = () => {
   const { categoryId, categoryName } = useParams()
   const [products, setProducts] = useState([])
   const [categories,setCategories] = useState([])
-  const [sort,setSort] = useState(false)
+  const [sort,setSort] = useState('DESC')
   const getAllCategories = async() =>{
     const response = await apis.getApiCategories()
     setCategories(response)
@@ -23,7 +23,7 @@ const Products = () => {
     setProducts(response.product)
   }
   const getAllProducts = async() =>{
-    const response = await apis.getApiProducts({}, { limit:20 })
+    const response = await apis.getApiProducts({}, { limit:20, sort})
     setProducts(response.product)
   }
   useEffect(() => {
@@ -56,15 +56,15 @@ const Products = () => {
             })}
           </div>
           <div className='w-1/5 flex flex-col'>
-            {/* <div 
-              className={sort? 'cursor-pointer text-cyan-500': 'cursor-pointer'}
-              onClick={()=>setSort(true)}
+            <div 
+              className={sort==='ASC'? 'cursor-pointer text-cyan-500': 'cursor-pointer'}
+              onClick={()=>setSort('ASC')}
             >
               Giá từ thấp đến cao
-            </div> */}
+            </div>
             <div
-              className={sort? 'cursor-pointer text-cyan-500': 'cursor-pointer'}
-              onClick={()=>setSort(!sort)}
+              className={sort==='DESC'? 'cursor-pointer text-cyan-500': 'cursor-pointer'}
+              onClick={()=>setSort('DESC')}
             >
               Giá từ cao đến thấp
             </div>

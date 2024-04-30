@@ -24,7 +24,8 @@ const Comment = (props) => {
                     <span>
                         <span className='font-semibold'>Đã đánh giá:</span>
                         <span className='flex items-center gap-1'>
-                            {comment}
+                            {/* {comment} */}
+                            <div dangerouslySetInnerHTML={{"__html": comment}}></div>
                         </span>
                     </span>
                     <div>
