@@ -3,7 +3,7 @@ import axios from '../axios'
 const apis = {
     //category
     getApiCategories: () => axios({
-        url:'/category/',
+        url:'/category',
         method:'GET'
     }),
     //products
@@ -13,16 +13,19 @@ const apis = {
         params:params,
     }),
     getOneApiProduct: (id) => axios({
-        url:`/product/${id}/`,
+        url:`/product/${id}`,
         method:'GET'
     }),
     createComment:(data,userId)=>axios({
         url:`/comment/create/${userId}/`,
         method:'POST',
-        data:data
+        headers: {
+            'Content-Type': 'application/json', 
+        },
+        data
     }),
     getProductComments: (productId) => axios({
-        url:`/comment/${productId}/`,
+        url:`/comment/${productId}`,
         method:'GET'
     }),
     deleteComment:(commentId,userId)=>axios({

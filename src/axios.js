@@ -12,6 +12,7 @@ instance.interceptors.request.use(function (config) {
     let auth = JSON.parse(data.auth)
     const accessToken = auth.login?.accessToken
     config.headers = { authorization: `Bearer ${accessToken}` }
+    config.headers['Content-Type'] = 'application/json';
     return config;
   }
   return config;
@@ -64,6 +65,7 @@ instance.interceptors.response.use(function (response) {
           localStorage.setItem('persist:root', JSON.stringify(newData))
           await new Promise(resolve => setTimeout(resolve, 500));
           originalConfig.headers['authorization'] = `Bearer ${accessToken}`;
+          originalConfig.headers['Content-Type'] = 'application/json';
           const retryResponse = await instance(originalConfig);
           return retryResponse;
         }

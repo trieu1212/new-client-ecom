@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { register } from '../../redux/apiRequest/authApiRequest'
 import { showModal } from '../../redux/slice/authSlice'
+import { toast } from 'react-toastify'
 const Register = () => {
     const [username, setUsername] = React.useState('')
     const [email, setEmail] = React.useState('')
@@ -14,12 +15,13 @@ const Register = () => {
     const dispatch = useDispatch()
     const navigate= useNavigate()
     const handleRegister =  useCallback(async()=>{
+      if(username==='' || email==='' || password===''){
+        return toast.error('Vui lòng điền đầy đủ thông tin')
+      }
       const data = {
         username,
         email,
         password,
-        phone,
-        address
       }
       dispatch(showModal({isShowModal:true,modalChildren:<Loading/>}))
       await register(data,dispatch,navigate)

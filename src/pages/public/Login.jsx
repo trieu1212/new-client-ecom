@@ -3,6 +3,7 @@ import { InputField, Button } from '../../components'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { login } from '../../redux/apiRequest/authApiRequest'
 import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 const Login = () => {
   const [username, setUsername] = React.useState('')
   const [password, setPassword] = React.useState('')
@@ -12,6 +13,9 @@ const Login = () => {
   const [searchParams] = useSearchParams()
   const redirect = searchParams.get('redirect')
   const handleLogin = useCallback(async () => {
+    if (username === '' || password === '') {
+      return toast.error('Vui lòng điền đầy đủ thông tin')
+    }
     const data = {
       username,
       password

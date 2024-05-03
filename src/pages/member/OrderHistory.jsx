@@ -14,7 +14,7 @@ const OrderHistory = () => {
         }
         getOrders()
     }, [])
-    console.log(orders)
+    // console.log(orders)
     return (
         <>
             <div className='w-main mx-auto flex flex-col '>

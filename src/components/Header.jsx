@@ -48,7 +48,7 @@ const Header = () => {
                         >
                             <FaUserCircle size={24} color='red' />
                             {isShowDropdown &&
-                                <div className='absolute top-full flex flex-col gap-2 items-center justify-center left-6 right-1 min-w-[160px] py-2 rounded-lg bg-gray-300'>
+                                <div className='absolute z-50 top-full flex flex-col gap-2 items-center justify-center left-6 right-1 min-w-[160px] py-2 rounded-lg bg-gray-300'>
                                     <Link className='p-1 flex items-center justify-center w-full hover:bg-main  hover:text-white font-semibold text-[14px] border-b' to={`${path.MEMBER}/${path.PROFILE}`}>
                                         Thông tin tài khoản
                                     </Link>

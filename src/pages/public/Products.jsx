@@ -27,7 +27,7 @@ const Products = () => {
     setProducts(response.product)
   }
   useEffect(() => {
-    if(categoryName===":categoryName"){
+    if(categoryName==="all"){
       getAllCategories()
       getAllProducts()
     }else{
@@ -41,7 +41,7 @@ const Products = () => {
         <div className='h-[81px] flex justify-center items-center bg-gray-100'>
           <div className='w-main '>
             <h3 className='font-semibold text-[20px]'>
-              {categoryName===":categoryName" ? 'Tất cả sản phẩm' : categoryName}
+              {categoryName==="all" ? 'Tất cả sản phẩm' : categoryName}
             </h3>
           </div>
         </div>

@@ -63,7 +63,7 @@ const Profile = (props) => {
               <InputField
                 label='Họ và tên'
                 placeholder='Nhập số điện thoại'
-                data={phone}
+                data={ phone}
                 setData={setPhone}
               />
             </div>

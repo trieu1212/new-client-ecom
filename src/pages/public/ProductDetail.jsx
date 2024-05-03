@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import { getUser } from '../../redux/apiRequest/userApiRequest';
 import { toast } from 'react-toastify';
+import axios from '../../axios'
 const ProductDetail = () => {
   var settings = {
     dots: true,
@@ -40,21 +41,34 @@ const ProductDetail = () => {
     }
     getProductDetail()
     getProductComments()
-  }, [id,comment])
-  const handleComment = async()=>{
-    const data={
-      comment:comment,
-      productId:id
-    }
-    const res = await apis.createComment(data, user?.id)
-    if(res.message === "Thêm đánh giá thành công"){
-      setComment('')
-      toast.success(res.message)
+  }, [id])
+  const handleComment = async () => {
+    if(!comment) return toast.error('Vui lòng nhập đánh giá')
+
+    else{
+      const data = {
+        comment: comment,
+        productId: id
+      }
+      try {
+        const res = await axios.post(`/comment/create/${user?.id}`,data,{
+          headers: {
+            'Content-Type': 'application/json', 
+          },
+        })
+        if (res.message === "Thêm đánh giá thành công") {
+          setComment('')
+          toast.success(res.message)
+          await getProductComments() 
+        }
+      } catch (error) {
+        toast.error('Đánh giá không hợp lệ')
+      }
     }
   }
   const handleDeleteComment = async (commentId) => {
     const res = await apis.deleteComment(commentId, user?.id)
-    if(res.message === "Xóa đánh giá thành công"){
+    if (res.message === "Xóa đánh giá thành công") {
       toast.success(res.message)
       await getProductComments()
     }
