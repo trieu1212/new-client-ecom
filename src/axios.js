@@ -2,7 +2,7 @@ import axios from "axios";
 
 const instance = axios.create({
   baseURL: 'http://localhost:7000/api',
-  withCredentials:true,
+  withCredentials: true,
 });
 // Add a request interceptor
 instance.interceptors.request.use(function (config) {
@@ -15,7 +15,7 @@ instance.interceptors.request.use(function (config) {
     return config;
   }
   return config;
-}, function (error) {   
+}, function (error) {
   // Do something with request error
   return Promise.reject(error);
 });
@@ -43,31 +43,37 @@ instance.interceptors.response.use(function (response) {
         let isSuccess = login.isSuccess
         const response = await instance.post('/auth/refresh')
         const { accessToken } = response
-        let updatedData = {
-          login:{
-            userData,
-            accessToken:accessToken,
-            isFetching,
-            isSuccess,
-            isError
-          },
-          register,
-          isShowModal,
-          modalChildren
+        if (accessToken) {
+          let updatedData = {
+            login: {
+              userData,
+              accessToken: accessToken,
+              isFetching,
+              isSuccess,
+              isError
+            },
+            register,
+            isShowModal,
+            modalChildren
+          }
+          let newData = {
+            auth: JSON.stringify(updatedData),
+            user: JSON.stringify(user),
+            _persist: JSON.stringify(_persist)
+          }
+          localStorage.setItem('persist:root', JSON.stringify(newData))
+          await new Promise(resolve => setTimeout(resolve, 500));
+          originalConfig.headers['authorization'] = `Bearer ${accessToken}`;
+          const retryResponse = await instance(originalConfig);
+          return retryResponse;
         }
-        let newData = {
-          auth:JSON.stringify(updatedData),
-          user:JSON.stringify(user),
-          _persist:JSON.stringify(_persist)
+        else {
+          localStorage.removeItem('persist:root')
+          window.location.href = '/login'
         }
-        localStorage.setItem('persist:root', JSON.stringify(newData))
-        await new Promise(resolve => setTimeout(resolve, 500));
-        originalConfig.headers['authorization'] = `Bearer ${accessToken}`;
-        const retryResponse = await instance(originalConfig);
-        return retryResponse;
       }
     } catch (err) {
-      if (err.response && err.response.status === 400) {
+      if (err.response && (err.response.status === 400 || err.response.status === 500)) {
         localStorage.removeItem('persist:root')
         window.location.href = '/login'
       }
