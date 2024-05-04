@@ -23,11 +23,12 @@ export const adminSidebar = [
         id:1,
         type:'SINGLE',
         value:'Quản lý người dùng',
-        path:`/${path.ADMIN}/${path.MANAGE_PRODUCT}`,
+        path:`/${path.ADMIN}/${path.MANAGE_USER}`,
     },
     {
         id:2,
         type:'PARENT',
+        value:'Sản phẩm',
         submenu: [
             {
                 text: 'Quản lý sản phẩm',

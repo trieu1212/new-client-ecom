@@ -55,7 +55,7 @@ const Header = () => {
                                     <Link className='p-1 flex items-center justify-center w-full hover:bg-main hover:text-white font-semibold text-[14px]' to={`/${path.CART}`}>
                                         Giỏ hàng
                                     </Link>
-                                    {isAdmin===1 && <Link className='p-1 flex items-center justify-center w-full hover:bg-main hover:text-white font-semibold text-[14px]' to={`/${path.ADMIN}/${path.MANAGE_PRODUCT}`}>
+                                    {isAdmin===1 && <Link className='p-1 flex items-center justify-center w-full hover:bg-main hover:text-white font-semibold text-[14px]' to={`/${path.ADMIN}/${path.MANAGE_USER}`}>
                                         Admin
                                     </Link>}
                                 </div>

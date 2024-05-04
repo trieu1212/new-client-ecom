@@ -76,7 +76,8 @@ const ProductDetail = () => {
   const getRelatedProducts = async () => {
     const query = {
       categoryId: product?.categoryId,
-      limit: 4
+      limit: 4,
+      currentPage: 1
     }
     const res = await apis.getApiProducts({}, query)
     setRelatedProducts(res.product)

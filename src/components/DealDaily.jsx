@@ -7,7 +7,8 @@ const DealDaily = () => {
     const { FaStar, FaRegStar, AiOutlineMenu } = icons
     const [product, setProduct] = useState({})
     const query = {
-        limit: 1
+        limit: 1,
+        currentPage: 1,
     }
     const getDealProduct = async () => {
         const response = await apis.getApiProducts({ page: 5 }, query)

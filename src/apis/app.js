@@ -8,7 +8,7 @@ const apis = {
     }),
     //products
     getApiProducts: (params,query) => axios({
-        url:query.categoryId? `/product/?limit=${query.limit || 10}&&categoryId=${query.categoryId}&&sort=${query.sort||false}`: `/product/?limit=${query.limit}&&sort=${query.sort||false}`,
+        url:query.categoryId? `/product/?limit=${query.limit || 10}&&categoryId=${query.categoryId}&&sort=${query.sort||false}&&page=${query.currentPage}`: `/product/?limit=${query.limit}&&sort=${query.sort||false}&&page=${query.currentPage}`,
         method:'GET',
         params:params,
     }),

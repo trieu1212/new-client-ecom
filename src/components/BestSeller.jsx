@@ -15,7 +15,8 @@ const BestSeller = () => {
     const [type, setType] = useState('Best Seller')
     const [products, setProducts] = useState([])
     const query = {
-        limit: type === 'Best Seller' ? 5 : 1
+        limit: type === 'Best Seller' ? 5 : 1,
+        currentPage: 1,
     }
     const fetchProducts = async () => {
         const response = await apis.getApiProducts({}, query)
