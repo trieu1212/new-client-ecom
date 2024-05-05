@@ -9,7 +9,7 @@ const Login = () => {
   const [password, setPassword] = React.useState('')
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const user = useSelector((state)=>state.user?.user)
+  const user = useSelector((state) => state.user?.user)
   const [searchParams] = useSearchParams()
   const redirect = searchParams.get('redirect')
   const handleLogin = useCallback(async () => {
@@ -20,16 +20,16 @@ const Login = () => {
       username,
       password
     }
-    await login(data,dispatch,navigate,redirect)
+    await login(data, dispatch, navigate, redirect)
   }, [username, password])
   useEffect(() => {
     if (user) {
-      navigate('/') 
+      navigate('/')
     }
   }, [user, navigate])
   return (
     <>
-      {user===null && <div className='w-screen h-screen relative'>
+      {user === null && <div className='w-screen h-screen relative'>
         <img
           src="https://png.pngtree.com/thumb_back/fw800/back_our/20190628/ourmid/pngtree-beautiful-e-commerce-red-background-image_267394.jpg"
           alt="background"
@@ -45,6 +45,7 @@ const Login = () => {
               handleOnClick={handleLogin}
               fw={true}
             />
+            <p className='text-center font-[10px] mt-4'> <Link to='/forgot-password' className='hover:text-main'>Quên mật khẩu</Link></p>
             <div className='mt-2'>
               <p className='text-center'>Đã có tài khoản? <Link to='/register' className='hover:text-main'>Đăng Ký ngay</Link></p>
             </div>

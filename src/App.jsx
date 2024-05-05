@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-import { Login, Home, Public, Products, ProductDetail, Blogs, Register, CartDetail } from './pages/public'
+import { Login, Home, Public, Products, ProductDetail, Blogs, Register, CartDetail, ForgotPassword, ResetPassword } from './pages/public'
 import {Member,Checkout,Profile} from './pages/member'
 import { ScrollToTop, Cart } from './components'
 import path from './ultils/path'
@@ -42,6 +42,8 @@ function App() {
           <Route path={path.LOGIN} element={<Login />} />
           <Route path={path.REGISTER} element={<Register />} />
           <Route path={path.ALL} element={<Home />} />
+          <Route path={path.FORGOT_PASSWORD} element={<ForgotPassword />} />
+          <Route path={path.RESET_PASSWORD} element={<ResetPassword/>} />
         </Routes>
       </div>
       <ToastContainer

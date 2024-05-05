@@ -17,5 +17,7 @@ const path = {
     MANAGE_PRODUCT: 'manage-product',
     MANAGE_USER: 'manage-user',
     CREATE_PRODUCT: 'create-product',
+    FORGOT_PASSWORD: 'forgot-password',
+    RESET_PASSWORD: 'reset-password/:email/:token',
 }
 export default path
