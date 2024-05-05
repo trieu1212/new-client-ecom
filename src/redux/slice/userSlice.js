@@ -27,6 +27,8 @@ const userSlice = createSlice({
 
         logoutUser:(state) => {
             state.user = null
+            state.carts = []
+            state.showCart = false
         }
     }
 })
