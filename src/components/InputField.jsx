@@ -1,7 +1,7 @@
 import React from 'react'
 
 const InputField = (props) => {
-   const {data, setData, type, invalidField, setInvalidField, placeholder} = props
+   const {data, setData, type, invalidField, setInvalidField, placeholder,disabled} = props
   return (
     <div className='w-full'>
         <input 
@@ -10,6 +10,7 @@ const InputField = (props) => {
             placeholder={placeholder} 
             value={data}
             onChange={(e) => setData(e.target.value)}
+            disabled={disabled==true?true:false}
         />
     </div>
   )
