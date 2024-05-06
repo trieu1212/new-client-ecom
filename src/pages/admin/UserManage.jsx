@@ -40,7 +40,7 @@ const UserManage = () => {
               {users.map((user, index) => (
                 <tr key={user.id}>
                   <td className='p-4'>{index + 1}</td>
-                  <td className='p-4'>{user.name}</td>
+                  <td className='p-4'>{user.username}</td>
                   <td className='p-4'>{user.email}</td>
                   <td className='p-4'>{user.phone}</td>
                   <td className='p-4'>{user.address}</td>

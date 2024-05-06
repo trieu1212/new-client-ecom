@@ -19,7 +19,8 @@ const Product = (props) => {
     try {
       const data = {
         productId: +productId || id,
-        quantity: 1
+        quantity: 1,
+        size: 'M'
       };
       const params = {
         userId: user?.id

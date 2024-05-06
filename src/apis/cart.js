@@ -13,7 +13,7 @@ export const apiUpdateCart = (params, data) => {
     });
   };
 export const apiRemoveCart= (params) => axios({
-    url: `/cart/delete/${params.productId}/${params.userId}`,
+    url: `/cart/delete/${params.productId}/${params.size}/${params.userId}`,
     // params: params,
     method: 'DELETE',
 })

@@ -32,6 +32,7 @@ const CartDetail = () => {
                         title={item?.Product?.title}
                         price={item?.Product?.price}
                         defaultQuantity={item?.quantity}
+                        size={item?.size}
                       />
                     </>
                   )

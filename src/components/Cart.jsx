@@ -14,8 +14,8 @@ const Cart = () => {
   const user = useSelector((state) => state.user?.user)
   const carts = useSelector((state) => state.user?.carts)
   const navigate = useNavigate()
-  const handleRemoveItem = async (id) => {
-    const response = await apiRemoveCart({ productId: id, userId: user?.id });
+  const handleRemoveItem = async (id,size) => {
+    const response = await apiRemoveCart({ productId: id,size:size, userId: user?.id });
     if (response.message === 'Deleted product from cart successfully') {
       toast.success('Xóa sản phẩm khỏi giỏ hàng thành công')
       await getUser(dispatch);
@@ -60,13 +60,16 @@ const Cart = () => {
                             Số lượng: {item?.quantity}
                           </span>
                           <span className=' text-[12px]'>
+                            Kích cỡ: {item?.size}
+                          </span>
+                          <span className=' text-[12px]'>
                             Giá tiền: {formatPrice(item?.Product?.price)}
                           </span>
                         </div>
                       </div>
                       <div>
                         <span className=''>
-                          <IoRemoveCircle size={24} className='cursor-pointer' onClick={() => handleRemoveItem(item?.Product?.id)} />
+                          <IoRemoveCircle size={24} className='cursor-pointer' onClick={() => handleRemoveItem(item?.Product?.id,item?.size)} />
                         </span>
                       </div>
                     </div>

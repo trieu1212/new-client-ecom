@@ -33,6 +33,7 @@ const Checkout = () => {
               <tr className='border bg-cyan-700 text-white'>
                 <th className=' p-2'>STT</th>
                 <th className=' p-2'>Tên Sản Phẩm</th>
+                <th className=' p-2'>Kích cỡ</th>
                 <th className=' p-2'>Giá</th>
                 <th className=' p-2'>Số Lượng</th>
               </tr>
@@ -42,6 +43,7 @@ const Checkout = () => {
                 <tr key={index} className='border'>
                   <td className='text-center '>{index + 1}</td>
                   <td className='text-center '>{cart?.Product.title}</td>
+                  <td className='text-center '>{cart?.size}</td>
                   <td className='text-center '>{formatPrice(cart?.Product.price)}</td>
                   <td className='text-center '>{cart?.quantity}</td>
                 </tr>

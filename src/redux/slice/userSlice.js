@@ -15,10 +15,10 @@ const userSlice = createSlice({
             state.showCart = !state.showCart
         },
         updateCart:(state,action) =>{
-            const {productId,quantity} = action.payload
+            const {productId,quantity,size} = action.payload
             const updateCart = JSON.parse(JSON.stringify(state.carts))
             state.carts = updateCart.map((item)=>{
-                if(item.productId === productId){
+                if(item.productId === productId || item.size === size){
                     return {...item,quantity:quantity}
                 }
                 return item

@@ -4,7 +4,7 @@ import { formatPrice } from '../ultils/helpers'
 import { useDispatch } from 'react-redux'
 import { updateCart } from '../redux/slice/userSlice'
 const OrderItem = (props) => {
-    const {id,productId,image,title,price, defaultQuantity=1} = props
+    const {id,productId,image,title,price, defaultQuantity=1,size} = props
     const [quantity, setQuantity] = useState(defaultQuantity)
     const dispatch = useDispatch()
     const handleQuantity = (number) => {
@@ -29,6 +29,9 @@ const OrderItem = (props) => {
                         <div className=' flex flex-col gap-1 '>
                             <span className=' text-[15px] text-main'>
                                 {title}
+                            </span>
+                            <span className=' text-[15px]'>
+                               Size: {size}
                             </span>
                         </div>
                     </div>

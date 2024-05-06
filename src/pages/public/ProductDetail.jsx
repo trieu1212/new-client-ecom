@@ -27,6 +27,7 @@ const ProductDetail = () => {
   const [relatedProducts, setRelatedProducts] = useState([])
   const [comments, setComments] = useState([{}])
   const [comment, setComment] = useState('')
+  const [size, setSize] = useState('')
   const user = useSelector((state) => state.user?.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -43,23 +44,23 @@ const ProductDetail = () => {
     getProductComments()
   }, [id])
   const handleComment = async () => {
-    if(!comment) return toast.error('Vui lòng nhập đánh giá')
+    if (!comment) return toast.error('Vui lòng nhập đánh giá')
 
-    else{
+    else {
       const data = {
         comment: comment,
         productId: id
       }
       try {
-        const res = await axios.post(`/comment/create/${user?.id}`,data,{
+        const res = await axios.post(`/comment/create/${user?.id}`, data, {
           headers: {
-            'Content-Type': 'application/json', 
+            'Content-Type': 'application/json',
           },
         })
         if (res.message === "Thêm đánh giá thành công") {
           setComment('')
           toast.success(res.message)
-          await getProductComments() 
+          await getProductComments()
         }
       } catch (error) {
         toast.error('Đánh giá không hợp lệ')
@@ -104,9 +105,11 @@ const ProductDetail = () => {
         quantity
       }
       const setTimeOutId = setTimeout(async () => {
+        if(!size) return toast.error('Vui lòng chọn kích cỡ sản phẩm')
         const response = await apiUpdateCart({ userId: user?.id }, {
           productId: id || product?.id,
-          quantity
+          quantity,
+          size
         })
         if (response.message == 'Updated cart successfully') {
           await getUser(dispatch);
@@ -171,6 +174,16 @@ const ProductDetail = () => {
               {product.description}
             </div>
             <div className='flex flex-col gap-8'>
+              <div className='flex gap-4 items-center'>
+                <span className='font-semibold'>Kích cỡ: </span>
+                <div className='flex gap-3 items-center'>
+                  <span className={`hover:text-white hover:bg-main p-2 cursor-pointer hover:rounded-lg ${size==='S'?'text-white bg-main rounded-lg':''}`} onClick={()=>setSize('S')}>S</span>
+                  <span className={`hover:text-white hover:bg-main p-2 cursor-pointer hover:rounded-lg ${size==='M'?'text-white bg-main rounded-lg':''}`} onClick={()=>setSize('M')}>M</span>
+                  <span className={`hover:text-white hover:bg-main p-2 cursor-pointer hover:rounded-lg ${size==='L'?'text-white bg-main rounded-lg':''}`} onClick={()=>setSize('L')}>L</span>
+                  <span className={`hover:text-white hover:bg-main p-2 cursor-pointer hover:rounded-lg ${size==='XL'?'text-white bg-main rounded-lg':''}`} onClick={()=>setSize('XL')}>XL</span>
+                  <span className={`hover:text-white hover:bg-main p-2 cursor-pointer hover:rounded-lg ${size==='XXL'?'text-white bg-main rounded-lg':''}`} onClick={()=>setSize('XXL')}>XXL</span>
+                </div>
+              </div>
               <div className='flex items-center gap-4'>
                 <span className='font-semibold'>Số lượng: </span>
                 <SelectQuantity

@@ -48,6 +48,7 @@ const OrderHistory = () => {
                                                     <div className='flex flex-col'>
                                                         <span className='font-semibold'>{item?.Product?.title}</span>
                                                         <span>x{item?.quantity}</span>
+                                                        <span>Size {item?.size}</span>
                                                     </div>
                                                 </div>
                                                 <span>{formatPrice(item?.Product?.price)}</span>

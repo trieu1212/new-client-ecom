@@ -61,7 +61,7 @@ const Products = () => {
             {categories.map((category) => {
               return (
                 <div key={category.id} className=' p-2 bg-main border rounded-xl text-white hover:bg-cyan-600'>
-                  <Link to={`/products/${category.id}/${category.name}`} >{category.name}</Link>
+                  <Link to={`/products/${category.id}/${category.name}`} onClick={()=>setCurrentPage(1)} >{category.name}</Link>
                 </div>
               )
             })}
